@@ -1,13 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-Script de comprobación de entrega de ejercicio
-
-Para ejecutarlo, desde la shell:
- $ python check.py login_github
-
-"""
 
 import os
 import random
@@ -53,7 +46,7 @@ aleatorio = str(int(random.random() * 1000000))
 error = 0
 
 print
-print "Clonando el repositorio " + repo_git + "\n"
+print ("Clonando el repositorio " + repo_git + "\n")
 os.system('git clone ' + repo_git + ' /tmp/' + aleatorio + ' > /dev/null 2>&1')
 
 github_files = []
@@ -66,27 +59,27 @@ for root, dirs, files in os.walk('/tmp/' + aleatorio):
 
 if len(github_files) != len(student_files) + len(repo_files):
     error = 1
-    print "Error: número de ficheros en el repositorio incorrecto"
+    print ("Error: número de ficheros en el repositorio incorrecto")
 
     for filename in student_files:
         if filename not in github_files:
-            print "\tError: " + filename + " no encontrado en el repositorio."
+            print ("\tError: " + filename + " no encontrado en el repositorio.")
 
     for filename in repo_files:
         if filename not in github_files:
-            print "\tError: " + filename + " no encontrado en el repositorio."
+            print ("\tError: " + filename + " no encontrado en el repositorio.")
 
 
 if not error:
-    print "Parece que la entrega se ha realizado bien."
+    print ("Parece que la entrega se ha realizado bien.")
 
 print
-print "La salida de pep8 es: (si todo va bien, no ha de mostrar nada)"
+print ("La salida de pep8 es: (si todo va bien, no ha de mostrar nada)")
 print
 filename = student_appname + '/views.py'
 if filename in github_files:
     os.system('pep8 --repeat --show-source --statistics /tmp/'
               + aleatorio + '/' + filename)
 else:
-    print "Fichero " + filename + " no encontrado en el repositorio."
+    print ("Fichero " + filename + " no encontrado en el repositorio.")
 print
